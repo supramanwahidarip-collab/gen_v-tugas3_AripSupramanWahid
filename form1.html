@@ -1,0 +1,1630 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kopi & Kudapan "Titik Kumpul" — Form Order UMKM</title>
+  <!-- Bootstrap 4.1.3 & Font Awesome 4.7.0 -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"> 
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!-- Google Fonts: Fredoka (Judul Playful), Plus Jakarta Sans (Body), Space Mono (Struk Kasir) -->
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+  <style>
+    /* ==========================================================================
+       1. PALET WARNA INDIE CAFE (LIGHT MODE: CREAMY PAPER, TOSCA SAGE, BUTTER YELLOW & SKY)
+       ========================================================================== */
+    .cafe-wrapper {
+      /* Warna Aksen Anak Muda (Kalem, Hangat, Tidak Jreng) */
+      --tosca-sage: #118ab2;
+      --tosca-mint: #06d6a0;
+      --sky-soft: #4ea8de;
+      --butter-yellow: #ffd166;
+      --coral-pop: #ef476f;
+      --caramel-warm: #f77f00;
+
+      /* Background Gradasi Bergerak (Pastel Warm Vibe) */
+      --bg-grad-1: #fdf8f0; /* Vintage Paper Cream */
+      --bg-grad-2: #e0f4f4; /* Soft Tosca Mist */
+      --bg-grad-3: #fff3d1; /* Soft Butter Milk */
+      --bg-grad-4: #e8f1fc; /* Soft Sky Cloud */
+
+      /* Permukaan Kartu & Tinta Garis (Tactile Indie Style) */
+      --paper-bg: #fffdf9;
+      --paper-secondary: #f8f4ec;
+      --receipt-paper: #ffffff;
+      --ink-border: #2b2118; /* Cokelat Espresso Tua (Lebih hangat dari hitam pekat) */
+      --shadow-hard: 4px 4px 0px #2b2118;
+      --shadow-sm: 2px 2px 0px #2b2118;
+
+      /* Warna Teks */
+      --text-main: #2b2118;
+      --text-sub: #5c5046;
+      --text-muted: #8c7d70;
+
+      /* Warna Input & Kartu Pilihan */
+      --input-bg: #ffffff;
+      --card-idle: #ffffff;
+      --card-hover: #fff9eb;
+      --card-active-bg: #e6fcf5;
+      --dot-pattern: rgba(43, 33, 24, 0.06);
+    }
+
+    /* ==========================================================================
+       2. DARK MODE (COZY NIGHT NONGKRONG / VINYL CAFE VIBE)
+       ========================================================================== */
+    #theme-toggle:checked ~ .cafe-wrapper {
+      --tosca-sage: #38bdf8;
+      --tosca-mint: #2dd4bf;
+      --sky-soft: #60a5fa;
+      --butter-yellow: #fbbf24;
+      --coral-pop: #fb7185;
+
+      --bg-grad-1: #1a1614; /* Dark Roasted Bean */
+      --bg-grad-2: #0f292a; /* Deep Midnight Tosca */
+      --bg-grad-3: #1e2030; /* Cozy Night Sky */
+      --bg-grad-4: #261f18; /* Dark Caramel Wood */
+
+      --paper-bg: #24201d;
+      --paper-secondary: #1c1917;
+      --receipt-paper: #2c2623;
+      --ink-border: #4a3f37;
+      --shadow-hard: 4px 4px 0px #0f0d0c;
+      --shadow-sm: 2px 2px 0px #0f0d0c;
+
+      --text-main: #fdf8f0;
+      --text-sub: #d6cbc2;
+      --text-muted: #8f8277;
+
+      --input-bg: #1c1917;
+      --card-idle: #2c2623;
+      --card-hover: #362f2b;
+      --card-active-bg: rgba(45, 212, 191, 0.14);
+      --dot-pattern: rgba(255, 255, 255, 0.04);
+    }
+
+    /* ==========================================================================
+       3. BASE & MOVING GRADIENT + POLKADOT TEXTURE
+       ========================================================================== */
+    * {
+      box-sizing: border-box;
+    }
+
+    body, html {
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* Sembunyikan Checkbox Utama Theme */
+    #theme-toggle {
+      display: none;
+    }
+
+    .cafe-wrapper {
+      min-height: 100vh;
+      width: 100%;
+      padding: 35px 16px 60px 16px;
+      position: relative;
+      background: linear-gradient(-45deg, var(--bg-grad-1), var(--bg-grad-2), var(--bg-grad-3), var(--bg-grad-4));
+      background-size: 350% 350%;
+      animation: softAurora 14s ease infinite;
+      color: var(--text-main);
+      transition: background 0.4s ease, color 0.3s ease;
+    }
+
+    /* Tekstur Kertas Titik-Titik Halus (Dotted Journal Aesthetic) */
+    .cafe-wrapper::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image: radial-gradient(var(--dot-pattern) 1.5px, transparent 1.5px);
+      background-size: 22px 22px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    @keyframes softAurora {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .main-container {
+      max-width: 1140px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* ==========================================================================
+       4. TOP TICKER & CAFE BANNER HEADER
+       ========================================================================== */
+    .top-bar-stickers {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .sticker-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--butter-yellow);
+      color: #2b2118;
+      border: 2px solid var(--ink-border);
+      box-shadow: var(--shadow-sm);
+      padding: 6px 14px;
+      border-radius: 50px;
+      font-weight: 800;
+      font-size: 0.78rem;
+      transform: rotate(-1deg);
+    }
+
+    /* Tombol Switch Light / Dark Mode */
+    .theme-btn-tactile {
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--paper-bg);
+      color: var(--text-main);
+      border: 2px solid var(--ink-border);
+      box-shadow: var(--shadow-sm);
+      padding: 7px 16px;
+      border-radius: 50px;
+      font-size: 0.8rem;
+      font-weight: 800;
+      margin: 0;
+      transition: all 0.2s ease;
+      user-select: none;
+    }
+
+    .theme-btn-tactile:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: var(--shadow-hard);
+      background: var(--butter-yellow);
+      color: #2b2118;
+    }
+
+    .theme-btn-tactile .moon-ic { display: none; }
+    .theme-btn-tactile .mode-txt::after { content: "Mode Siang ☀️"; }
+
+    #theme-toggle:checked ~ .cafe-wrapper .theme-btn-tactile .sun-ic { display: none; }
+    #theme-toggle:checked ~ .cafe-wrapper .theme-btn-tactile .moon-ic { display: inline-block; }
+    #theme-toggle:checked ~ .cafe-wrapper .theme-btn-tactile .mode-txt::after { content: "Mode Nongkrong Malam 🌙"; }
+
+    /* Kartu Header Toko */
+    .shop-banner {
+      background: var(--paper-bg);
+      border: 2.5px solid var(--ink-border);
+      border-radius: 24px;
+      box-shadow: var(--shadow-hard);
+      padding: 24px 30px;
+      margin-bottom: 26px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Pita Gradasi Bergerak di Atas Header */
+    .shop-banner::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 8px;
+      background: linear-gradient(90deg, var(--tosca-mint), var(--sky-soft), var(--butter-yellow), var(--tosca-sage));
+      background-size: 300% 100%;
+      animation: softAurora 6s linear infinite;
+      border-bottom: 2px solid var(--ink-border);
+    }
+
+    .shop-header-flex {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 18px;
+      margin-top: 6px;
+    }
+
+    .shop-brand {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .shop-avatar {
+      width: 68px;
+      height: 68px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, var(--tosca-mint), var(--sky-soft));
+      border: 2.5px solid var(--ink-border);
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      color: #2b2118;
+      transform: rotate(-3deg);
+      flex-shrink: 0;
+    }
+
+    .shop-title h1 {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1.75rem;
+      font-weight: 700;
+      margin: 0 0 4px 0;
+      color: var(--text-main);
+      letter-spacing: 0.3px;
+    }
+
+    .shop-tagline {
+      font-size: 0.86rem;
+      color: var(--text-sub);
+      margin: 0;
+      font-weight: 600;
+    }
+
+    .shop-badges {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .mini-badge {
+      padding: 6px 12px;
+      border-radius: 12px;
+      border: 1.5px solid var(--ink-border);
+      font-size: 0.76rem;
+      font-weight: 800;
+      background: var(--paper-secondary);
+      color: var(--text-main);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* ==========================================================================
+       5. GRID UTAMA: FORM KIRI & STRUK KASIR BERGERIGI KANAN
+       ========================================================================== */
+    .order-grid {
+      display: grid;
+      grid-template-columns: 1fr 365px;
+      gap: 26px;
+      align-items: start;
+    }
+
+    .order-board {
+      background: var(--paper-bg);
+      border: 2.5px solid var(--ink-border);
+      border-radius: 24px;
+      box-shadow: var(--shadow-hard);
+      padding: 30px;
+    }
+
+    /* Judul Tiap Bagian (Gaya Label Stiker) */
+    .section-banner {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 30px 0 16px 0;
+      padding-bottom: 10px;
+      border-bottom: 2px dashed var(--ink-border);
+    }
+
+    .section-banner:first-of-type {
+      margin-top: 0;
+    }
+
+    .sec-number {
+      font-family: 'Fredoka', sans-serif;
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      background: var(--butter-yellow);
+      color: #2b2118;
+      border: 2px solid var(--ink-border);
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .sec-title {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 0;
+      color: var(--text-main);
+    }
+
+    .sec-hint {
+      margin-left: auto;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--tosca-sage);
+      background: rgba(17, 138, 178, 0.1);
+      padding: 4px 10px;
+      border-radius: 50px;
+    }
+
+    /* ==========================================================================
+       6. FITUR SPESIAL: MOOD BOOSTER FILTER (INTERAKTIF MURNI CSS)
+       ========================================================================== */
+    .mood-bar {
+      background: var(--paper-secondary);
+      border: 2px solid var(--ink-border);
+      border-radius: 16px;
+      padding: 12px 15px;
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .mood-label {
+      font-size: 0.8rem;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .mood-options {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .sr-only-input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .mood-chip {
+      cursor: pointer;
+      padding: 5px 12px;
+      border-radius: 50px;
+      border: 1.5px solid var(--ink-border);
+      background: var(--card-idle);
+      color: var(--text-main);
+      font-size: 0.75rem;
+      font-weight: 700;
+      margin: 0;
+      transition: all 0.2s ease;
+    }
+
+    .mood-chip:hover {
+      background: var(--card-hover);
+      transform: translateY(-1px);
+    }
+
+    .sr-only-input:checked + .mood-chip {
+      background: var(--tosca-mint);
+      color: #2b2118;
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* Highlight Menu Sesuai Mood yang Dipilih */
+    .order-board:has(#mood_nugas:checked) .card-nugas,
+    .order-board:has(#mood_hemat:checked) .card-hemat,
+    .order-board:has(#mood_rame:checked) .card-rame {
+      outline: 3px dashed var(--caramel-warm);
+      outline-offset: 3px;
+    }
+
+    /* ==========================================================================
+       7. VARIASI RADIO 1: KARTU MENU ALA KATALOG KAFE
+       ========================================================================== */
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+
+    .menu-card {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background: var(--card-idle);
+      border: 2px solid var(--ink-border);
+      border-radius: 18px;
+      padding: 16px;
+      cursor: pointer;
+      margin: 0;
+      transition: all 0.2s ease;
+      position: relative;
+      height: 100%;
+    }
+
+    .menu-card:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: var(--shadow-hard);
+      background: var(--card-hover);
+    }
+
+    .menu-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .menu-emoji {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      border: 2px solid var(--ink-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.35rem;
+      background: var(--butter-yellow);
+      color: #2b2118;
+    }
+
+    .sticker-tag {
+      font-size: 0.68rem;
+      font-weight: 800;
+      padding: 3px 9px;
+      border-radius: 8px;
+      border: 1.5px solid var(--ink-border);
+      background: #ffd166;
+      color: #2b2118;
+      transform: rotate(2deg);
+    }
+
+    .sticker-tag.mint {
+      background: #a8f5e0;
+      transform: rotate(-2deg);
+    }
+
+    .sticker-tag.sky {
+      background: #bae6fd;
+    }
+
+    .menu-title {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1.02rem;
+      font-weight: 600;
+      color: var(--text-main);
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .menu-desc {
+      font-size: 0.76rem;
+      color: var(--text-sub);
+      line-height: 1.45;
+      display: block;
+      margin-bottom: 12px;
+    }
+
+    .menu-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 10px;
+      border-top: 1.5px dashed var(--ink-border);
+    }
+
+    .menu-price {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--tosca-sage);
+    }
+
+    .pick-btn-ui {
+      padding: 4px 10px;
+      border-radius: 8px;
+      border: 1.5px solid var(--ink-border);
+      font-size: 0.72rem;
+      font-weight: 800;
+      background: var(--paper-secondary);
+      color: var(--text-main);
+      transition: all 0.2s ease;
+    }
+
+    .pick-btn-ui::after {
+      content: "Pilih Menu";
+    }
+
+    /* State Saat Kartu Menu Dipilih */
+    .sr-only-input:checked + .menu-card {
+      background: var(--card-active-bg);
+      box-shadow: var(--shadow-hard);
+      transform: translate(-2px, -2px);
+    }
+
+    .sr-only-input:checked + .menu-card .pick-btn-ui {
+      background: var(--tosca-mint);
+      color: #2b2118;
+    }
+
+    .sr-only-input:checked + .menu-card .pick-btn-ui::after {
+      content: "✓ Terpilih";
+    }
+
+    /* ==========================================================================
+       8. VARIASI RADIO 2 (TAKaran ES) & SELECT DROPDOWN
+       ========================================================================== */
+    .field-label {
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 6px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .pill-segmented {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      background: var(--paper-secondary);
+      padding: 5px;
+      border-radius: 14px;
+      border: 2px solid var(--ink-border);
+    }
+
+    .seg-label {
+      text-align: center;
+      padding: 8px 6px;
+      border-radius: 9px;
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: var(--text-sub);
+      cursor: pointer;
+      margin: 0;
+      transition: all 0.2s ease;
+    }
+
+    .sr-only-input:checked + .seg-label {
+      background: var(--butter-yellow);
+      color: #2b2118;
+      border: 1.5px solid var(--ink-border);
+      box-shadow: 1px 1px 0px var(--ink-border);
+    }
+
+    /* Custom Select Kafe */
+    .cafe-select {
+      width: 100%;
+      height: 46px;
+      padding: 0 14px;
+      border-radius: 13px;
+      border: 2px solid var(--ink-border);
+      background-color: var(--input-bg);
+      color: var(--text-main);
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      outline: none;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.2s ease;
+    }
+
+    .cafe-select:focus {
+      border-color: var(--tosca-sage);
+      transform: translate(-1px, -1px);
+      box-shadow: var(--shadow-hard);
+    }
+
+    /* ==========================================================================
+       9. VARIASI CHECKBOX 1: TOPPING CHIPS & GIFT DRAWER TOGGLE
+       ========================================================================== */
+    .topping-wrap {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .topping-chip {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px;
+      border-radius: 13px;
+      border: 2px solid var(--ink-border);
+      background: var(--card-idle);
+      cursor: pointer;
+      margin: 0;
+      transition: all 0.2s ease;
+    }
+
+    .topping-chip:hover {
+      background: var(--card-hover);
+      transform: translateY(-1px);
+    }
+
+    .top-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .box-tick {
+      width: 20px;
+      height: 20px;
+      border-radius: 6px;
+      border: 2px solid var(--ink-border);
+      background: var(--input-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      color: transparent;
+      transition: all 0.2s ease;
+    }
+
+    .top-price {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 6px;
+      background: var(--paper-secondary);
+      border: 1px solid var(--ink-border);
+    }
+
+    .sr-only-input:checked + .topping-chip {
+      background: var(--card-active-bg);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .sr-only-input:checked + .topping-chip .box-tick {
+      background: var(--tosca-mint);
+      color: #2b2118;
+    }
+
+    /* FITUR UNIK: CHECKBOX TOGGLE "KIRIM BUAT TEMEN / CRUSH" */
+    .gift-toggle-box {
+      margin-top: 16px;
+      background: linear-gradient(90deg, rgba(6, 214, 160, 0.12), rgba(255, 209, 102, 0.2));
+      border: 2px dashed var(--ink-border);
+      border-radius: 16px;
+      padding: 14px 16px;
+    }
+
+    .gift-trigger-label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      margin: 0;
+      font-size: 0.88rem;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .gift-drawer {
+      display: none;
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1.5px dashed var(--ink-border);
+    }
+
+    #gift_mode:checked ~ .gift-drawer {
+      display: block;
+      animation: slideDown 0.25s ease;
+    }
+
+    #gift_mode:checked + .gift-trigger-label .box-tick {
+      background: var(--butter-yellow);
+      color: #2b2118;
+    }
+
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ==========================================================================
+       10. VARIASI INPUT TEXT & TEXTAREA
+       ========================================================================== */
+    .cafe-input-group {
+      position: relative;
+      display: flex;
+      align-items: center;
+      background: var(--input-bg);
+      border: 2px solid var(--ink-border);
+      border-radius: 13px;
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
+      transition: all 0.2s ease;
+    }
+
+    .cafe-input-group:focus-within {
+      transform: translate(-2px, -2px);
+      box-shadow: var(--shadow-hard);
+      border-color: var(--tosca-sage);
+    }
+
+    .cafe-input-icon {
+      width: 44px;
+      height: 44px;
+      background: var(--paper-secondary);
+      border-right: 2px solid var(--ink-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-main);
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+
+    .cafe-input {
+      width: 100%;
+      border: none;
+      background: transparent;
+      padding: 10px 34px 10px 12px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--text-main);
+      outline: none;
+    }
+
+    .cafe-input::placeholder {
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .ok-badge {
+      position: absolute;
+      right: 10px;
+      color: #059669;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+
+    .cafe-input:valid:not(:placeholder-shown) ~ .ok-badge {
+      opacity: 1;
+    }
+
+    .cafe-textarea {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 13px;
+      border: 2px solid var(--ink-border);
+      background: var(--input-bg);
+      color: var(--text-main);
+      font-size: 0.86rem;
+      font-weight: 600;
+      box-shadow: var(--shadow-sm);
+      outline: none;
+      resize: vertical;
+      transition: all 0.2s ease;
+    }
+
+    .cafe-textarea:focus {
+      transform: translate(-2px, -2px);
+      box-shadow: var(--shadow-hard);
+    }
+
+    /* ==========================================================================
+       11. VARIASI RADIO 3: TIKET VOUCHER DISKON ANAK KOS
+       ========================================================================== */
+    .voucher-tickets {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .ticket-card {
+      position: relative;
+      padding: 12px 10px;
+      background: var(--paper-secondary);
+      border: 2px solid var(--ink-border);
+      border-radius: 12px;
+      cursor: pointer;
+      text-align: center;
+      margin: 0;
+      transition: all 0.2s ease;
+    }
+
+    .ticket-card:hover {
+      background: var(--card-hover);
+      transform: translateY(-2px);
+    }
+
+    .ticket-code {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--tosca-sage);
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .ticket-desc {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--text-sub);
+      display: block;
+    }
+
+    .sr-only-input:checked + .ticket-card {
+      background: var(--butter-yellow);
+      color: #2b2118;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .sr-only-input:checked + .ticket-card .ticket-code,
+    .sr-only-input:checked + .ticket-card .ticket-desc {
+      color: #2b2118;
+    }
+
+    /* ==========================================================================
+       12. PANEL KANAN: KERTAS STRUK KASIR BERGERIGI ASLI (ZIG-ZAG PAPER RECEIPT)
+       ========================================================================== */
+    .receipt-wrapper {
+      position: sticky;
+      top: 24px;
+    }
+
+    .paper-receipt {
+      background: var(--receipt-paper);
+      border: 2.5px solid var(--ink-border);
+      border-radius: 16px;
+      box-shadow: var(--shadow-hard);
+      padding: 24px 22px;
+      position: relative;
+      font-family: 'Space Mono', monospace;
+    }
+
+    /* Hiasan Lubang Gantungan Struk Kafe di Atas */
+    .receipt-pin {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--butter-yellow);
+      border: 2px solid var(--ink-border);
+      margin: 0 auto 12px auto;
+    }
+
+    .receipt-header {
+      text-align: center;
+      border-bottom: 2px dashed var(--ink-border);
+      padding-bottom: 14px;
+      margin-bottom: 14px;
+    }
+
+    .receipt-header h4 {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin: 0 0 4px 0;
+      color: var(--text-main);
+    }
+
+    .receipt-header p {
+      font-size: 0.72rem;
+      color: var(--text-sub);
+      margin: 0;
+    }
+
+    .receipt-cat {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--tosca-sage);
+      margin: 12px 0 6px 0;
+    }
+
+    /* Baris Item Struk (Otomatis Muncul via Pure CSS :has) */
+    .rec-row {
+      display: none;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.78rem;
+      padding: 5px 0;
+      border-bottom: 1px dotted var(--ink-border);
+      color: var(--text-main);
+    }
+
+    .rec-row strong {
+      color: var(--tosca-sage);
+    }
+
+    /* Pure CSS :has() Binding untuk Menampilkan Pilihan di Struk */
+    .main-container:has(#menu_1:checked) .r-menu-1,
+    .main-container:has(#menu_2:checked) .r-menu-2,
+    .main-container:has(#menu_3:checked) .r-menu-3,
+    .main-container:has(#menu_4:checked) .r-menu-4,
+    .main-container:has(#ice_normal:checked) .r-ice-1,
+    .main-container:has(#ice_less:checked) .r-ice-2,
+    .main-container:has(#ice_no:checked) .r-ice-3,
+    .main-container:has(#top_1:checked) .r-top-1,
+    .main-container:has(#top_2:checked) .r-top-2,
+    .main-container:has(#top_3:checked) .r-top-3,
+    .main-container:has(#top_4:checked) .r-top-4,
+    .main-container:has(#gift_mode:checked) .r-gift,
+    .main-container:has(#vouc_1:checked) .r-vouc-1,
+    .main-container:has(#vouc_2:checked) .r-vouc-2,
+    .main-container:has(#vouc_3:checked) .r-vouc-3,
+    .main-container:has(#pay_qris:checked) .r-pay-1,
+    .main-container:has(#pay_ewallet:checked) .r-pay-2,
+    .main-container:has(#pay_cod:checked) .r-pay-3 {
+      display: flex;
+    }
+
+    /* Tombol Aksi 3D Tactile (Sangat Disukai Umur 18-25) */
+    .btn-order-now {
+      font-family: 'Fredoka', sans-serif;
+      width: 100%;
+      padding: 14px 18px;
+      border-radius: 14px;
+      border: 2.5px solid var(--ink-border);
+      background: linear-gradient(90deg, var(--tosca-mint), var(--butter-yellow), var(--sky-soft));
+      background-size: 200% 200%;
+      animation: softAurora 5s ease infinite;
+      color: #2b2118;
+      font-size: 1.05rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: var(--shadow-hard);
+      transition: all 0.15s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .btn-order-now:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 6px 6px 0px var(--ink-border);
+    }
+
+    .btn-order-now:active {
+      transform: translate(2px, 2px);
+      box-shadow: 1px 1px 0px var(--ink-border);
+    }
+
+    .btn-action-pair {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .btn-secondary-cafe {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      padding: 9px 10px;
+      border-radius: 11px;
+      border: 2px solid var(--ink-border);
+      background: var(--paper-secondary);
+      color: var(--text-main);
+      font-size: 0.76rem;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.15s ease;
+    }
+
+    .btn-secondary-cafe:hover {
+      background: var(--butter-yellow);
+      color: #2b2118;
+      transform: translate(-1px, -1px);
+    }
+
+    /* Hiasan Barcode Struk Kafe */
+    .receipt-barcode {
+      margin-top: 18px;
+      padding-top: 14px;
+      border-top: 2px dashed var(--ink-border);
+      text-align: center;
+    }
+
+    .barcode-lines {
+      height: 32px;
+      width: 85%;
+      margin: 0 auto 6px auto;
+      background: repeating-linear-gradient(
+        90deg,
+        var(--text-main),
+        var(--text-main) 2px,
+        transparent 2px,
+        transparent 5px,
+        var(--text-main) 5px,
+        var(--text-main) 6px,
+        transparent 6px,
+        transparent 9px
+      );
+      opacity: 0.75;
+    }
+
+    .barcode-text {
+      font-size: 0.68rem;
+      letter-spacing: 2px;
+      color: var(--text-muted);
+    }
+
+    /* Responsive Mobile */
+    @media (max-width: 991.98px) {
+      .order-grid {
+        grid-template-columns: 1fr;
+      }
+      .receipt-wrapper {
+        position: static;
+      }
+    }
+
+    @media (max-width: 767.98px) {
+      .menu-grid, .topping-wrap, .voucher-tickets {
+        grid-template-columns: 1fr;
+      }
+      .order-board, .shop-banner {
+        padding: 20px 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- CHECKBOX HACK UNTUK LIGHT & DARK MODE -->
+  <input type="checkbox" id="theme-toggle">
+
+  <div class="cafe-wrapper">
+    <div class="main-container">
+
+      <!-- BARIS ATAS: STIKER INFO & TOMBOL MODE -->
+      <div class="top-bar-stickers">
+        <div class="sticker-pill">
+          <span>✨ Sobat Kosan & Mahasiswa Friendly — Diskon s/d Rp 10.000!</span>
+        </div>
+
+        <label for="theme-toggle" class="theme-btn-tactile">
+          <i class="fa fa-sun-o sun-ic"></i>
+          <i class="fa fa-moon-o moon-ic"></i>
+          <span class="mode-txt"></span>
+        </label>
+      </div>
+
+      <!-- HEADER KAFE / UMKM -->
+      <header class="shop-banner">
+        <div class="shop-header-flex">
+          <div class="shop-brand">
+            <div class="shop-avatar">🧋</div>
+            <div class="shop-title">
+              <h1>Kedai "Titik Kumpul"</h1>
+              <p class="shop-tagline">Kopi Susu Artisan, Toast & Dessert Box • Freshly Made Daily</p>
+            </div>
+          </div>
+
+          <div class="shop-badges">
+            <span class="mini-badge"><i class="fa fa-star text-warning"></i> 4.9 (1.5rb+ Terjual)</span>
+            <span class="mini-badge"><i class="fa fa-check-circle text-info"></i> 100% Halal</span>
+            <span class="mini-badge"><i class="fa fa-motorcycle text-success"></i> Siap Antar Kosan/Kampus</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- FORM UTAMA DIMULAI -->
+      <form>
+        <div class="order-grid">
+
+          <!-- ========================================================
+               KOLOM KIRI: LEMBAR PEMESANAN PELANGGAN
+               ======================================================== -->
+          <div class="order-board">
+
+            <!-- BAGIAN 1: PILIH MENU & FILTER MOOD (RADIO VARIASI 1) -->
+            <div class="section-banner">
+              <span class="sec-number">1</span>
+              <h2 class="sec-title">Pilih Menu Favoritmu</h2>
+              <span class="sec-hint">Klik kartu menu</span>
+            </div>
+
+            <!-- Fitur Filter Mood Anak Muda -->
+            <div class="mood-bar">
+              <span class="mood-label">🎯 Lagi butuh mood apa hari ini?</span>
+              <div class="mood-options">
+                <input type="radio" name="mood_filter" id="mood_all" class="sr-only-input" checked>
+                <label for="mood_all" class="mood-chip">Semua Menu ✨</label>
+
+                <input type="radio" name="mood_filter" id="mood_nugas" class="sr-only-input">
+                <label for="mood_nugas" class="mood-chip">Temen Nugas / Begadang 💻</label>
+
+                <input type="radio" name="mood_filter" id="mood_hemat" class="sr-only-input">
+                <label for="mood_hemat" class="mood-chip">Paket Tanggal Tua 💸</label>
+
+                <input type="radio" name="mood_filter" id="mood_rame" class="sr-only-input">
+                <label for="mood_rame" class="mood-chip">Nongkrong Ramean 🎉</label>
+              </div>
+            </div>
+
+            <!-- Katalog Kartu Menu (Radio Button) -->
+            <div class="menu-grid">
+              <!-- Menu 1 -->
+              <div>
+                <input type="radio" name="menu_utama" id="menu_1" value="kopi_begadang" class="sr-only-input" checked>
+                <label for="menu_1" class="menu-card card-nugas card-hemat">
+                  <div>
+                    <div class="menu-top">
+                      <span class="menu-emoji">☕</span>
+                      <span class="sticker-tag">🔥 PALING LARIS</span>
+                    </div>
+                    <span class="menu-title">Es Kopi Susu Gula Aren "Anti Ngantuk"</span>
+                    <span class="menu-desc">Double shot espresso arabika + susu segar creamy & aren asli. Cocok buat nugas!</span>
+                  </div>
+                  <div class="menu-footer">
+                    <span class="menu-price">Rp 18.000</span>
+                    <span class="pick-btn-ui"></span>
+                  </div>
+                </label>
+              </div>
+
+              <!-- Menu 2 -->
+              <div>
+                <input type="radio" name="menu_utama" id="menu_2" value="matcha_latte" class="sr-only-input">
+                <label for="menu_2" class="menu-card card-nugas">
+                  <div>
+                    <div class="menu-top">
+                      <span class="menu-emoji">🍵</span>
+                      <span class="sticker-tag mint">🌿 MOODBOOSTER</span>
+                    </div>
+                    <span class="menu-title">Uji Matcha Oatmilk Creamy</span>
+                    <span class="menu-desc">Pure Japanese matcha dengan oatmilk gurih, wangi, dan nggak bikin eneg.</span>
+                  </div>
+                  <div class="menu-footer">
+                    <span class="menu-price">Rp 22.000</span>
+                    <span class="pick-btn-ui"></span>
+                  </div>
+                </label>
+              </div>
+
+              <!-- Menu 3 -->
+              <div>
+                <input type="radio" name="menu_utama" id="menu_3" value="toast_combo" class="sr-only-input">
+                <label for="menu_3" class="menu-card card-hemat">
+                  <div>
+                    <div class="menu-top">
+                      <span class="menu-emoji">🥪</span>
+                      <span class="sticker-tag sky">💸 HEMAT KENYANG</span>
+                    </div>
+                    <span class="menu-title">Combo Korean Egg Toast + Lemon Tea</span>
+                    <span class="menu-desc">Roti panggang brioche tebal isi telurふわふわ, smoked beef, keju lumer + Es Lemon Tea.</span>
+                  </div>
+                  <div class="menu-footer">
+                    <span class="menu-price">Rp 28.000</span>
+                    <span class="pick-btn-ui"></span>
+                  </div>
+                </label>
+              </div>
+
+              <!-- Menu 4 -->
+              <div>
+                <input type="radio" name="menu_utama" id="menu_4" value="party_literan" class="sr-only-input">
+                <label for="menu_4" class="menu-card card-rame">
+                  <div>
+                    <div class="menu-top">
+                      <span class="menu-emoji">🎉</span>
+                      <span class="sticker-tag">🥳 BUNDLING SEKOSAN</span>
+                    </div>
+                    <span class="menu-title">Paket Ramean: Kopi 1 Liter + 4 Croffle</span>
+                    <span class="menu-desc">Bisa buat 4-5 orang! Kopi Susu 1 Liter + 4 Crunchy Croffle saus Cokelat & Matcha.</span>
+                  </div>
+                  <div class="menu-footer">
+                    <span class="menu-price">Rp 75.000</span>
+                    <span class="pick-btn-ui"></span>
+                  </div>
+                </label>
+              </div>
+            </div>
+
+            <!-- BAGIAN 2: KUSTOMISASI RASA & TOPPING (SELECT, RADIO & CHECKBOX) -->
+            <div class="section-banner">
+              <span class="sec-number">2</span>
+              <h2 class="sec-title">Atur Selera & Extra Topping</h2>
+              <span class="sec-hint">Sesuaikan suka-suka</span>
+            </div>
+
+            <div class="form-row">
+              <!-- Variasi Select 1: Ukuran Cup -->
+              <div class="form-group col-md-4">
+                <label for="ukuran_cup" class="field-label">Ukuran Cup / Porsi</label>
+                <select id="ukuran_cup" name="ukuran_cup" class="cafe-select">
+                  <option value="reguler">Reguler Cup (16 oz)</option>
+                  <option value="jumbo">Upsize Jumbo (22 oz +Rp 4rb)</option>
+                  <option value="botol">Botol Kalcer 500ml (+Rp 10rb)</option>
+                </select>
+              </div>
+
+              <!-- Variasi Select 2: Level Gula -->
+              <div class="form-group col-md-4">
+                <label for="level_manis" class="field-label">Takaran Manis (Sugar)</label>
+                <select id="level_manis" name="level_manis" class="cafe-select">
+                  <option value="normal">Normal Sweet (100%)</option>
+                  <option value="less">Less Sugar (70% - Pas!)</option>
+                  <option value="half">Half Sugar (50%)</option>
+                  <option value="zero">No Sugar (0%)</option>
+                </select>
+              </div>
+
+              <!-- Variasi Radio 2: Segmented Pill Takaran Es -->
+              <div class="form-group col-md-4">
+                <label class="field-label">Takaran Es Batu</label>
+                <div class="pill-segmented">
+                  <div>
+                    <input type="radio" name="takaran_es" id="ice_normal" value="Normal Ice" class="sr-only-input" checked>
+                    <label for="ice_normal" class="seg-label">Normal 🧊</label>
+                  </div>
+                  <div>
+                    <input type="radio" name="takaran_es" id="ice_less" value="Less Ice" class="sr-only-input">
+                    <label for="ice_less" class="seg-label">Less Ice</label>
+                  </div>
+                  <div>
+                    <input type="radio" name="takaran_es" id="ice_no" value="Pisah Es" class="sr-only-input">
+                    <label for="ice_no" class="seg-label">Pisah Es</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Variasi Checkbox 1: Pilih Extra Topping -->
+            <label class="field-label mt-2">
+              <span>Tambah Topping / Cemilan Pendamping (Bisa centang banyak)</span>
+              <span style="color: var(--tosca-sage);">Opsional</span>
+            </label>
+            <div class="topping-wrap">
+              <div>
+                <input type="checkbox" name="topping" id="top_1" value="macchiato_foam" class="sr-only-input" checked>
+                <label for="top_1" class="topping-chip">
+                  <span class="top-left">
+                    <span class="box-tick"><i class="fa fa-check"></i></span>
+                    🧀 Salted Cheese Foam
+                  </span>
+                  <span class="top-price">+Rp 5rb</span>
+                </label>
+              </div>
+
+              <div>
+                <input type="checkbox" name="topping" id="top_2" value="boba_jelly" class="sr-only-input">
+                <label for="top_2" class="topping-chip">
+                  <span class="top-left">
+                    <span class="box-tick"><i class="fa fa-check"></i></span>
+                    🍮 Brown Sugar Coffee Jelly
+                  </span>
+                  <span class="top-price">+Rp 4rb</span>
+                </label>
+              </div>
+
+              <div>
+                <input type="checkbox" name="topping" id="top_3" value="kentang_goreng" class="sr-only-input">
+                <label for="top_3" class="topping-chip">
+                  <span class="top-left">
+                    <span class="box-tick"><i class="fa fa-check"></i></span>
+                    🍟 Truffle French Fries
+                  </span>
+                  <span class="top-price">+Rp 12rb</span>
+                </label>
+              </div>
+
+              <div>
+                <input type="checkbox" name="topping" id="top_4" value="stiker_pack" class="sr-only-input">
+                <label for="top_4" class="topping-chip">
+                  <span class="top-left">
+                    <span class="box-tick"><i class="fa fa-check"></i></span>
+                    🎨 Stiker Pack Laptop Lucu
+                  </span>
+                  <span class="top-price">GRATIS</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Variasi Checkbox 2: Fitur Toggle "Kirim Buat Temen / Crush" -->
+            <div class="gift-toggle-box">
+              <input type="checkbox" name="kirim_temen" id="gift_mode" class="sr-only-input">
+              <label for="gift_mode" class="gift-trigger-label">
+                <span style="display: flex; align-items: center; gap: 10px;">
+                  <span class="box-tick"><i class="fa fa-check"></i></span>
+                  💌 Mau kirim pesanan ini buat Temen / Sahabat / Crush? (Klik di sini!)
+                </span>
+                <span class="sticker-tag">Free Kartu Ucapan!</span>
+              </label>
+
+              <!-- Drawer Terbuka Otomatis Saat Checkbox Dicentang -->
+              <div class="gift-drawer">
+                <div class="form-row">
+                  <div class="form-group col-md-5 mb-2">
+                    <label for="nama_crush" class="field-label">Nama Panggilan Penerima</label>
+                    <div class="cafe-input-group">
+                      <div class="cafe-input-icon"><i class="fa fa-heart text-danger"></i></div>
+                      <input type="text" id="nama_crush" name="nama_crush" class="cafe-input" placeholder="Cth: Kak Dinda / Raka">
+                    </div>
+                  </div>
+                  <div class="form-group col-md-7 mb-2">
+                    <label for="pesan_cup" class="field-label">Tulisan Penyemangat di Cup / Kartu</label>
+                    <div class="cafe-input-group">
+                      <div class="cafe-input-icon"><i class="fa fa-pencil"></i></div>
+                      <input type="text" id="pesan_cup" name="pesan_cup" class="cafe-input" placeholder="Cth: Semangat revisiannya ya! Jangan lupa makan 😊">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- BAGIAN 3: DATA PEMESAN & ALAMAT KOSAN/RUMAH (TEXT, SELECT & TEXTAREA) -->
+            <div class="section-banner">
+              <span class="sec-number">3</span>
+              <h2 class="sec-title">Info Pemesan & Pengantaran</h2>
+              <span class="sec-hint">Pastikan WA aktif ya</span>
+            </div>
+
+            <div class="form-row">
+              <!-- Input Text 1: Nama Panggilan di Cup -->
+              <div class="form-group col-md-4">
+                <label for="nama_pemesan" class="field-label">Nama Panggilan (Di Cup) *</label>
+                <div class="cafe-input-group">
+                  <div class="cafe-input-icon"><i class="fa fa-smile-o"></i></div>
+                  <input type="text" id="nama_pemesan" name="nama_pemesan" class="cafe-input" placeholder="Cth: Arip / Nisa" required>
+                  <i class="fa fa-check-circle ok-badge"></i>
+                </div>
+              </div>
+
+              <!-- Input Text 2: Nomor WhatsApp -->
+              <div class="form-group col-md-4">
+                <label for="wa_pemesan" class="field-label">No. WhatsApp Aktif *</label>
+                <div class="cafe-input-group">
+                  <div class="cafe-input-icon"><i class="fa fa-whatsapp text-success"></i></div>
+                  <input type="text" id="wa_pemesan" name="wa_pemesan" class="cafe-input" placeholder="0812xxxx" required>
+                  <i class="fa fa-check-circle ok-badge"></i>
+                </div>
+              </div>
+
+              <!-- Input Text 3: Username IG (Fitur Loyalitas Anak Muda) -->
+              <div class="form-group col-md-4">
+                <label for="ig_pemesan" class="field-label">Instagram (Dapet Poin!)</label>
+                <div class="cafe-input-group">
+                  <div class="cafe-input-icon"><i class="fa fa-instagram"></i></div>
+                  <input type="text" id="ig_pemesan" name="ig_pemesan" class="cafe-input" placeholder="@username_kamu">
+                </div>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <!-- Variasi Select 3: Waktu Pengantaran -->
+              <div class="form-group col-md-5">
+                <label for="waktu_kirim" class="field-label">Jadwal Pengiriman / Pickup</label>
+                <select id="waktu_kirim" name="waktu_kirim" class="cafe-select">
+                  <option value="sekarang">🚀 Kirim Sekarang (15-25 Menit)</option>
+                  <option value="siang">☀️ Jam Makan Siang (12.00 WIB)</option>
+                  <option value="sore">🌤️ Sore Pulang Kuliah (16.30 WIB)</option>
+                  <option value="malam">🌙 Malam Temen Nugas (19.30 WIB)</option>
+                  <option value="pickup">🏃 Ambil Sendiri di Kedai (Bebas Ongkir)</option>
+                </select>
+              </div>
+
+              <!-- Input Text 4: Jumlah Cup/Porsi -->
+              <div class="form-group col-md-3">
+                <label for="jumlah_order" class="field-label">Total Jumlah</label>
+                <div class="cafe-input-group">
+                  <div class="cafe-input-icon"><i class="fa fa-cubes"></i></div>
+                  <input type="text" id="jumlah_order" name="jumlah_order" class="cafe-input" value="1 Paket" required>
+                </div>
+              </div>
+
+              <!-- Checkbox 3: Eco-Friendly Cutlery -->
+              <div class="form-group col-md-4 d-flex align-items-end">
+                <div style="width: 100%;">
+                  <input type="checkbox" name="eco_straw" id="eco_straw" class="sr-only-input" checked>
+                  <label for="eco_straw" class="topping-chip" style="height: 46px;">
+                    <span class="top-left">
+                      <span class="box-tick"><i class="fa fa-check"></i></span>
+                      🌱 Sedotan Kertas / Eco
+                    </span>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <!-- Variasi Textarea 1: Alamat Kosan / Kampus -->
+              <div class="form-group col-md-7 mb-2">
+                <label for="alamat_kos" class="field-label">Alamat Lengkap Kosan / Rumah & Patokan *</label>
+                <textarea id="alamat_kos" name="alamat_kos" rows="2" class="cafe-textarea" placeholder="Cth: Kos Putra Melati Kamar 04 (Sebelah fotokopi kampus, pagar warna biru)..." required></textarea>
+              </div>
+
+              <!-- Variasi Textarea 2: Catatan ke Barista / Kurir -->
+              <div class="form-group col-md-5 mb-2">
+                <label for="catatan_barista" class="field-label">Catatan ke Barista / Kurir</label>
+                <textarea id="catatan_barista" name="catatan_barista" rows="2" class="cafe-textarea" placeholder="Cth: Titip di meja satpam kos ya bang / Kopinya dibikin agak strong..."></textarea>
+              </div>
+            </div>
+
+            <!-- BAGIAN 4: VOUCHER ANAK KOS & METODE BAYAR (RADIO VARIASI 3 & 4) -->
+            <div class="section-banner">
+              <span class="sec-number">4</span>
+              <h2 class="sec-title">Klaim Kupon & Metode Bayar</h2>
+              <span class="sec-hint">Klik kupon untuk pakai</span>
+            </div>
+
+            <label class="field-label">Pilih Kupon Diskon Spesial Hari Ini:</label>
+            <div class="voucher-tickets mb-3">
+              <div>
+                <input type="radio" name="voucher" id="vouc_1" value="SOBATKOS" class="sr-only-input" checked>
+                <label for="vouc_1" class="ticket-card">
+                  <span class="ticket-code">🎟️ SOBATKOS</span>
+                  <span class="ticket-desc">Gratis Ongkir Area Kampus</span>
+                </label>
+              </div>
+
+              <div>
+                <input type="radio" name="voucher" id="vouc_2" value="TANGGALTUA" class="sr-only-input">
+                <label for="vouc_2" class="ticket-card">
+                  <span class="ticket-code">🎟️ TANGGALTUA</span>
+                  <span class="ticket-desc">Potongan Langsung Rp 5.000</span>
+                </label>
+              </div>
+
+              <div>
+                <input type="radio" name="voucher" id="vouc_3" value="FREEUPSIZE" class="sr-only-input">
+                <label for="vouc_3" class="ticket-card">
+                  <span class="ticket-code">🎟️ FREEUPSIZE</span>
+                  <span class="ticket-desc">Gratis Upgrade Cup Jumbo</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Variasi Radio 4: Metode Pembayaran -->
+            <label class="field-label">Pilih Cara Bayar Paling Gampang:</label>
+            <div class="pill-segmented">
+              <div>
+                <input type="radio" name="metode_bayar" id="pay_qris" value="QRIS" class="sr-only-input" checked>
+                <label for="pay_qris" class="seg-label">📱 QRIS All-Payment</label>
+              </div>
+              <div>
+                <input type="radio" name="metode_bayar" id="pay_ewallet" value="GoPay/ShopeePay" class="sr-only-input">
+                <label for="pay_ewallet" class="seg-label">👛 ShopeePay / GoPay</label>
+              </div>
+              <div>
+                <input type="radio" name="metode_bayar" id="pay_cod" value="COD Tunai" class="sr-only-input">
+                <label for="pay_cod" class="seg-label">💵 COD (Bayar di Kos)</label>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- ========================================================
+               KOLOM KANAN: KERTAS STRUK KASIR BERGERIGI (LIVE UPDATE)
+               ======================================================== -->
+          <aside class="receipt-wrapper">
+            <div class="paper-receipt">
+              <div class="receipt-pin"></div>
+
+              <div class="receipt-header">
+                <h4>STRUK ORDER KEDAI</h4>
+                <p>KEDAI TITIK KUMPUL • #ORD-2026</p>
+              </div>
+
+              <!-- Menu Utama yang Dipilih -->
+              <div class="receipt-cat">📌 Menu Pilihanmu:</div>
+              <div class="rec-row r-menu-1">
+                <span>1x Kopi Susu Aren</span>
+                <strong>Rp 18.000</strong>
+              </div>
+              <div class="rec-row r-menu-2">
+                <span>1x Uji Matcha Oat</span>
+                <strong>Rp 22.000</strong>
+              </div>
+              <div class="rec-row r-menu-3">
+                <span>1x Combo Egg Toast</span>
+                <strong>Rp 28.000</strong>
+              </div>
+              <div class="rec-row r-menu-4">
+                <span>1x Paket Literan + Croffle</span>
+                <strong>Rp 75.000</strong>
+              </div>
+
+              <!-- Takaran Es -->
+              <div class="rec-row r-ice-1">
+                <span>• Es Batu:</span>
+                <span>Normal Ice 🧊</span>
+              </div>
+              <div class="rec-row r-ice-2">
+                <span>• Es Batu:</span>
+                <span>Less Ice</span>
+              </div>
+              <div class="rec-row r-ice-3">
+                <span>• Es Batu:</span>
+                <span>Es Dipisah</span>
+              </div>
+
+              <!-- Topping Tambahan -->
+              <div class="receipt-cat">🧀 Extra Topping & Gift:</div>
+              <div class="rec-row r-top-1">
+                <span>+ Salted Cheese Foam</span>
+                <strong>Rp 5.000</strong>
+              </div>
+              <div class="rec-row r-top-2">
+                <span>+ Brown Sugar Jelly</span>
+                <strong>Rp 4.000</strong>
+              </div>
+              <div class="rec-row r-top-3">
+                <span>+ Truffle Fries</span>
+                <strong>Rp 12.000</strong>
+              </div>
+              <div class="rec-row r-top-4">
+                <span>+ Stiker Pack Laptop</span>
+                <strong>GRATIS</strong>
+              </div>
+              <div class="rec-row r-gift">
+                <span>💌 Mode Kirim Temen/Crush</span>
+                <strong>AKTIF ✓</strong>
+              </div>
+
+              <!-- Kupon & Pembayaran -->
+              <div class="receipt-cat">🎟️ Promo & Pembayaran:</div>
+              <div class="rec-row r-vouc-1">
+                <span>Kupon: SOBATKOS</span>
+                <strong>FREE ONGKIR</strong>
+              </div>
+              <div class="rec-row r-vouc-2">
+                <span>Kupon: TANGGALTUA</span>
+                <strong>-Rp 5.000</strong>
+              </div>
+              <div class="rec-row r-vouc-3">
+                <span>Kupon: FREEUPSIZE</span>
+                <strong>FREE JUMBO</strong>
+              </div>
+
+              <div class="rec-row r-pay-1">
+                <span>Bayar via:</span>
+                <strong>QRIS INSTAN</strong>
+              </div>
+              <div class="rec-row r-pay-2">
+                <span>Bayar via:</span>
+                <strong>E-WALLET</strong>
+              </div>
+              <div class="rec-row r-pay-3">
+                <span>Bayar via:</span>
+                <strong>COD TUNAI</strong>
+              </div>
+
+              <!-- Variasi Button 1, 2 & 3 -->
+              <button type="submit" name="kirim_pesanan" class="btn-order-now">
+                <i class="fa fa-whatsapp" style="font-size: 1.2rem;"></i> Gas Pesan Sekarang!
+              </button>
+
+              <div class="btn-action-pair">
+                <button type="reset" class="btn-secondary-cafe">
+                  <i class="fa fa-refresh"></i> Reset Form
+                </button>
+                <button type="button" class="btn-secondary-cafe">
+                  <i class="fa fa-share-alt"></i> Ajak Patungan
+                </button>
+              </div>
+
+              <!-- Barcode Struk Kasir -->
+              <div class="receipt-barcode">
+                <div class="barcode-lines"></div>
+                <div class="barcode-text">*TERIMAKASIH-SOBAT-2026*</div>
+              </div>
+            </div>
+          </aside>
+
+        </div>
+      </form>
+
+    </div>
+  </div>
+
+</body>
+</html>
