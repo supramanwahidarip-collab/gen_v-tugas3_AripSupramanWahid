@@ -1,0 +1,1481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tugas Form 1 Arip</title>
+</head>
+<body>
+    <!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Senja Rasa — Form Pemesanan Resmi UMKM Nusantara</title>
+  <!-- Bootstrap 4.1.3 & Font Awesome 4.7.0 -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"> 
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    /* ==========================================================================
+       1. PALET WARNA PSIKOLOGI UMKM (LIGHT MODE: WARM CREAM, CARAMEL & SAGE TOSCA)
+       ========================================================================== */
+    .umkm-portal {
+      /* Brand Colors: Warm Caramel, Fresh Sage Tosca, Soft Gold */
+      --brand-caramel: #ea580c;
+      --brand-amber: #f59e0b;
+      --brand-tosca: #0d9488;
+      --brand-emerald: #059669;
+      --brand-glow: rgba(234, 88, 12, 0.16);
+      --tosca-glow: rgba(13, 148, 136, 0.16);
+
+      /* Moving Gradient Background (Warm Artisanal Market Vibe) */
+      --bg-grad-1: #fffbeb; /* Warm Oat Cream */
+      --bg-grad-2: #ffedd5; /* Soft Peach Caramel */
+      --bg-grad-3: #ccfbf1; /* Fresh Mint Tosca */
+      --bg-grad-4: #fef3c7; /* Soft Butter Yellow */
+
+      /* Card & Surface */
+      --surface-main: rgba(255, 255, 255, 0.88);
+      --surface-sidebar: rgba(255, 252, 245, 0.92);
+      --surface-border: rgba(255, 255, 255, 0.95);
+      --divider: rgba(226, 232, 240, 0.85);
+      --card-shadow: 0 25px 55px -12px rgba(120, 53, 15, 0.12), 0 0 0 1px rgba(255, 255, 255, 0.85);
+
+      /* Typography */
+      --text-dark: #1c1917;
+      --text-medium: #57534e;
+      --text-light: #78716c;
+      --text-placeholder: #a8a29e;
+
+      /* Input & Interactive Cards */
+      --input-bg: #ffffff;
+      --input-border: #e7e5e4;
+      --item-card-bg: rgba(255, 255, 255, 0.85);
+      --item-card-hover: #fff7ed;
+      --receipt-bg: #ffffff;
+    }
+
+    /* ==========================================================================
+       2. DARK MODE VARIABLES (COZY ESPRESSO CAFE NIGHT MODE)
+       ========================================================================== */
+    #dark-mode-toggle:checked ~ .umkm-portal {
+      --brand-caramel: #fb923c;
+      --brand-amber: #fbbf24;
+      --brand-tosca: #2dd4bf;
+      --brand-emerald: #34d399;
+      --brand-glow: rgba(251, 146, 60, 0.2);
+      --tosca-glow: rgba(45, 212, 191, 0.2);
+
+      --bg-grad-1: #1c1917; /* Deep Espresso */
+      --bg-grad-2: #0f172a; /* Midnight Slate */
+      --bg-grad-3: #042f2e; /* Dark Forest Tosca */
+      --bg-grad-4: #271c19; /* Roasted Cocoa */
+
+      --surface-main: rgba(28, 25, 23, 0.86);
+      --surface-sidebar: rgba(15, 23, 42, 0.85);
+      --surface-border: rgba(251, 191, 36, 0.16);
+      --divider: rgba(68, 64, 60, 0.65);
+      --card-shadow: 0 30px 65px -15px rgba(0, 0, 0, 0.75), 0 0 0 1px rgba(251, 191, 36, 0.12);
+
+      --text-dark: #fafaf9;
+      --text-medium: #d6d3d1;
+      --text-light: #a8a29e;
+      --text-placeholder: #57534e;
+
+      --input-bg: rgba(41, 37, 36, 0.8);
+      --input-border: #44403c;
+      --item-card-bg: rgba(41, 37, 36, 0.65);
+      --item-card-hover: rgba(251, 146, 60, 0.12);
+      --receipt-bg: rgba(28, 25, 23, 0.95);
+    }
+
+    /* ==========================================================================
+       3. BASE & MOVING GRADIENT ANIMATION
+       ========================================================================== */
+    * {
+      box-sizing: border-box;
+    }
+
+    body, html {
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      overflow-x: hidden;
+    }
+
+    #dark-mode-toggle {
+      display: none;
+    }
+
+    .umkm-portal {
+      min-height: 100vh;
+      width: 100%;
+      padding: 35px 18px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      position: relative;
+      background: linear-gradient(-45deg, var(--bg-grad-1), var(--bg-grad-2), var(--bg-grad-3), var(--bg-grad-4));
+      background-size: 350% 350%;
+      animation: gradientMove 14s ease infinite;
+      transition: background 0.5s ease, color 0.3s ease;
+      z-index: 1;
+    }
+
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Ambient Glowing Blobs */
+    .ambient-glow {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(85px);
+      z-index: -1;
+      pointer-events: none;
+      opacity: 0.55;
+      animation: floatGlow 11s ease-in-out infinite alternate;
+    }
+
+    .glow-caramel {
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, #fbbf24, transparent 70%);
+      top: -90px;
+      left: -80px;
+    }
+
+    .glow-tosca {
+      width: 420px;
+      height: 420px;
+      background: radial-gradient(circle, #2dd4bf, transparent 70%);
+      bottom: -100px;
+      right: -80px;
+      animation-delay: -5s;
+    }
+
+    #dark-mode-toggle:checked ~ .umkm-portal .ambient-glow {
+      opacity: 0.18;
+    }
+
+    @keyframes floatGlow {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(30px, -30px) scale(1.08); }
+    }
+
+    /* ==========================================================================
+       4. MAIN STORE CONTAINER & FLASH PROMO BAR
+       ========================================================================== */
+    .store-container {
+      width: 100%;
+      max-width: 1180px;
+      background: var(--surface-main);
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
+      border: 1px solid var(--surface-border);
+      border-radius: 28px;
+      box-shadow: var(--card-shadow);
+      overflow: hidden;
+      transition: all 0.4s ease;
+    }
+
+    /* Top Moving Promo Banner (Sangat Efektif Menarik Pelanggan UMKM) */
+    .promo-ticker {
+      background: linear-gradient(90deg, #0d9488, #ea580c, #d97706, #059669);
+      background-size: 300% 100%;
+      animation: gradientMove 8s linear infinite;
+      color: #ffffff;
+      padding: 10px 24px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .promo-badge {
+      background: rgba(255, 255, 255, 0.22);
+      padding: 3px 10px;
+      border-radius: 50px;
+      font-size: 0.72rem;
+      letter-spacing: 0.5px;
+      margin-right: 8px;
+    }
+
+    /* Store Header */
+    .store-header {
+      padding: 26px 38px;
+      border-bottom: 1px solid var(--divider);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .brand-profile {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .brand-logo {
+      width: 58px;
+      height: 58px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #ea580c, #f59e0b);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      box-shadow: 0 10px 20px -5px rgba(234, 88, 12, 0.45);
+    }
+
+    .brand-info h1 {
+      font-size: 1.45rem;
+      font-weight: 800;
+      color: var(--text-dark);
+      margin: 0 0 4px 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .verified-pill {
+      font-size: 0.7rem;
+      background: rgba(13, 148, 136, 0.14);
+      color: var(--brand-tosca);
+      padding: 3px 9px;
+      border-radius: 50px;
+      font-weight: 700;
+      border: 1px solid rgba(13, 148, 136, 0.3);
+    }
+
+    .trust-metrics {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-size: 0.8rem;
+      color: var(--text-medium);
+      font-weight: 600;
+      flex-wrap: wrap;
+    }
+
+    .trust-metrics .star {
+      color: #f59e0b;
+      font-weight: 800;
+    }
+
+    /* Dark / Light Switch Button */
+    .mode-switch-btn {
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 18px;
+      border-radius: 50px;
+      background: var(--input-bg);
+      border: 1.5px solid var(--input-border);
+      color: var(--text-dark);
+      font-size: 0.82rem;
+      font-weight: 700;
+      margin: 0;
+      transition: all 0.3s ease;
+      user-select: none;
+    }
+
+    .mode-switch-btn:hover {
+      border-color: var(--brand-caramel);
+      transform: translateY(-1px);
+    }
+
+    .mode-switch-btn .sun { color: #f59e0b; }
+    .mode-switch-btn .moon { color: #38bdf8; display: none; }
+    .mode-switch-btn .label-text::after { content: "Suasana Pagi (Light)"; }
+
+    #dark-mode-toggle:checked ~ .umkm-portal .mode-switch-btn .sun { display: none; }
+    #dark-mode-toggle:checked ~ .umkm-portal .mode-switch-btn .moon { display: inline-block; }
+    #dark-mode-toggle:checked ~ .umkm-portal .mode-switch-btn .label-text::after { content: "Suasana Cafe (Dark)"; }
+
+    /* ==========================================================================
+       5. LAYOUT 2 KOLOM (FORM PEMESANAN KIRI & LIVE STRUK KASIR KANAN)
+       ========================================================================== */
+    .checkout-layout {
+      display: grid;
+      grid-template-columns: 1fr 370px;
+    }
+
+    .form-column {
+      padding: 34px 38px;
+      border-right: 1px solid var(--divider);
+    }
+
+    .summary-column {
+      padding: 34px 28px;
+      background: var(--surface-sidebar);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    /* Section Headers */
+    .step-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 28px 0 16px 0;
+      padding-bottom: 10px;
+      border-bottom: 1.5px dashed var(--divider);
+    }
+
+    .step-header:first-of-type {
+      margin-top: 0;
+    }
+
+    .step-num {
+      width: 30px;
+      height: 30px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--brand-tosca), var(--brand-emerald));
+      color: #ffffff;
+      font-weight: 800;
+      font-size: 0.82rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .step-title {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--text-dark);
+      margin: 0;
+    }
+
+    .step-subtitle {
+      font-size: 0.78rem;
+      color: var(--text-light);
+      margin-left: auto;
+      font-weight: 600;
+    }
+
+    /* ==========================================================================
+       6. VARIASI 1: RADIO BUTTON SEBAGAI KATALOG PRODUK VISUAL
+       ========================================================================== */
+    .product-catalog-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin-bottom: 10px;
+    }
+
+    .hidden-input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .product-card-label {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 16px;
+      border-radius: 18px;
+      background: var(--item-card-bg);
+      border: 2px solid var(--input-border);
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+      margin: 0;
+      height: 100%;
+    }
+
+    .product-card-label:hover {
+      background: var(--item-card-hover);
+      border-color: var(--brand-amber);
+      transform: translateY(-3px);
+    }
+
+    .prod-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 10px;
+    }
+
+    .prod-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, rgba(234, 88, 12, 0.12), rgba(245, 158, 11, 0.18));
+      color: var(--brand-caramel);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+    }
+
+    .badge-hot {
+      font-size: 0.68rem;
+      font-weight: 800;
+      padding: 4px 9px;
+      border-radius: 50px;
+      background: linear-gradient(135deg, #ea580c, #f59e0b);
+      color: #fff;
+      letter-spacing: 0.4px;
+    }
+
+    .badge-fav {
+      font-size: 0.68rem;
+      font-weight: 800;
+      padding: 4px 9px;
+      border-radius: 50px;
+      background: linear-gradient(135deg, #0d9488, #10b981);
+      color: #fff;
+    }
+
+    .prod-name {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: var(--text-dark);
+      margin-bottom: 4px;
+      display: block;
+    }
+
+    .prod-desc {
+      font-size: 0.76rem;
+      color: var(--text-light);
+      line-height: 1.4;
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .prod-price-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 10px;
+      border-top: 1px dashed var(--divider);
+    }
+
+    .prod-price {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--brand-caramel);
+    }
+
+    .select-circle {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: 2px solid var(--input-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: transparent;
+      font-size: 0.7rem;
+      transition: all 0.25s ease;
+    }
+
+    /* State Ketika Produk Dipilih */
+    .hidden-input:checked + .product-card-label {
+      border-color: var(--brand-caramel);
+      background: linear-gradient(145deg, rgba(234, 88, 12, 0.08), rgba(245, 158, 11, 0.12));
+      box-shadow: 0 12px 24px -8px var(--brand-glow);
+    }
+
+    .hidden-input:checked + .product-card-label .select-circle {
+      background: var(--brand-caramel);
+      border-color: var(--brand-caramel);
+      color: #ffffff;
+    }
+
+    /* ==========================================================================
+       7. VARIASI 2: CHECKBOX SEBAGAI KARTU ADD-ON / TOPPING EKSTRA
+       ========================================================================== */
+    .addon-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .addon-label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 15px;
+      border-radius: 14px;
+      background: var(--item-card-bg);
+      border: 1.5px solid var(--input-border);
+      cursor: pointer;
+      margin: 0;
+      transition: all 0.2s ease;
+    }
+
+    .addon-label:hover {
+      border-color: var(--brand-tosca);
+      background: var(--item-card-hover);
+    }
+
+    .addon-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .check-box-ui {
+      width: 20px;
+      height: 20px;
+      border-radius: 6px;
+      border: 2px solid var(--text-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: transparent;
+      font-size: 0.72rem;
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+    }
+
+    .addon-title {
+      font-size: 0.84rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      display: block;
+    }
+
+    .addon-price {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: var(--brand-tosca);
+      background: rgba(13, 148, 136, 0.1);
+      padding: 3px 8px;
+      border-radius: 6px;
+    }
+
+    .hidden-input:checked + .addon-label {
+      border-color: var(--brand-tosca);
+      background: linear-gradient(135deg, rgba(13, 148, 136, 0.1), rgba(5, 150, 105, 0.08));
+      box-shadow: 0 6px 14px var(--tosca-glow);
+    }
+
+    .hidden-input:checked + .addon-label .check-box-ui {
+      background: var(--brand-tosca);
+      border-color: var(--brand-tosca);
+      color: #ffffff;
+    }
+
+    /* ==========================================================================
+       8. VARIASI 3: INPUT TEXT, SELECT DROPDOWN & TEXTAREA MODERN
+       ========================================================================== */
+    .form-label-umkm {
+      font-size: 0.84rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .req-tag {
+      color: var(--brand-caramel);
+      font-size: 0.72rem;
+      font-weight: 600;
+    }
+
+    .input-box-modern {
+      position: relative;
+      display: flex;
+      align-items: center;
+      background: var(--input-bg);
+      border: 1.5px solid var(--input-border);
+      border-radius: 13px;
+      overflow: hidden;
+      transition: all 0.25s ease;
+    }
+
+    .input-box-modern:focus-within {
+      border-color: var(--brand-caramel);
+      box-shadow: 0 0 0 4px var(--brand-glow);
+      transform: translateY(-1px);
+    }
+
+    .input-icon-left {
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--brand-caramel);
+      background: rgba(234, 88, 12, 0.07);
+      border-right: 1px solid var(--divider);
+      font-size: 0.95rem;
+      flex-shrink: 0;
+    }
+
+    .input-field-umkm {
+      width: 100%;
+      border: none;
+      background: transparent;
+      padding: 10px 36px 10px 14px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-dark);
+      outline: none;
+    }
+
+    .input-field-umkm::placeholder {
+      color: var(--text-placeholder);
+      font-weight: 400;
+    }
+
+    /* Centang Valid Otomatis */
+    .auto-check {
+      position: absolute;
+      right: 12px;
+      color: var(--brand-emerald);
+      opacity: 0;
+      transform: scale(0.5);
+      transition: all 0.25s ease;
+      pointer-events: none;
+    }
+
+    .input-field-umkm:valid:not(:placeholder-shown) ~ .auto-check {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    /* Select Custom UMKM */
+    .select-umkm {
+      width: 100%;
+      height: 46px;
+      padding: 0 14px;
+      border-radius: 13px;
+      border: 1.5px solid var(--input-border);
+      background-color: var(--input-bg);
+      color: var(--text-dark);
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      outline: none;
+      transition: all 0.25s ease;
+    }
+
+    .select-umkm:focus {
+      border-color: var(--brand-caramel);
+      box-shadow: 0 0 0 4px var(--brand-glow);
+    }
+
+    /* Textarea Custom UMKM */
+    .textarea-umkm {
+      width: 100%;
+      padding: 12px 15px;
+      border-radius: 13px;
+      border: 1.5px solid var(--input-border);
+      background: var(--input-bg);
+      color: var(--text-dark);
+      font-size: 0.88rem;
+      font-weight: 500;
+      outline: none;
+      resize: vertical;
+      transition: all 0.25s ease;
+    }
+
+    .textarea-umkm:focus {
+      border-color: var(--brand-caramel);
+      box-shadow: 0 0 0 4px var(--brand-glow);
+    }
+
+    /* ==========================================================================
+       9. VARIASI 4: RADIO PILLS UNTUK PENGIRIMAN & METODE PEMBAYARAN
+       ========================================================================== */
+    .shipping-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .ship-pill-label {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 12px 10px;
+      border-radius: 14px;
+      background: var(--item-card-bg);
+      border: 1.5px solid var(--input-border);
+      cursor: pointer;
+      margin: 0;
+      transition: all 0.2s ease;
+    }
+
+    .ship-pill-label:hover {
+      border-color: var(--brand-amber);
+    }
+
+    .ship-pill-label i {
+      font-size: 1.2rem;
+      color: var(--brand-tosca);
+      margin-bottom: 6px;
+    }
+
+    .ship-title {
+      font-size: 0.8rem;
+      font-weight: 800;
+      color: var(--text-dark);
+      display: block;
+    }
+
+    .ship-sub {
+      font-size: 0.7rem;
+      color: var(--text-light);
+      font-weight: 600;
+    }
+
+    .hidden-input:checked + .ship-pill-label {
+      border-color: var(--brand-tosca);
+      background: linear-gradient(135deg, rgba(13, 148, 136, 0.12), rgba(245, 158, 11, 0.1));
+      box-shadow: 0 6px 15px var(--tosca-glow);
+    }
+
+    /* ==========================================================================
+       10. PANEL KANAN: LIVE STRUK KASIR OTOMATIS (PURE CSS :has() MAGIC!)
+       ========================================================================== */
+    .receipt-card {
+      background: var(--receipt-bg);
+      border: 1.5px solid var(--divider);
+      border-radius: 22px;
+      padding: 24px 22px;
+      box-shadow: 0 14px 30px -10px rgba(0, 0, 0, 0.07);
+      position: sticky;
+      top: 25px;
+    }
+
+    .receipt-head {
+      text-align: center;
+      padding-bottom: 16px;
+      border-bottom: 2px dashed var(--divider);
+      margin-bottom: 16px;
+    }
+
+    .receipt-head h4 {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--text-dark);
+      margin: 0 0 4px 0;
+      letter-spacing: 0.5px;
+    }
+
+    .receipt-head span {
+      font-size: 0.75rem;
+      color: var(--text-light);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* Free Gift / Ongkir Progress inside Receipt */
+    .Spin-promo-box {
+      background: linear-gradient(135deg, rgba(13, 148, 136, 0.1), rgba(245, 158, 11, 0.12));
+      border: 1px solid rgba(13, 148, 136, 0.25);
+      border-radius: 12px;
+      padding: 10px 12px;
+      margin-bottom: 16px;
+    }
+
+    .promo-progress-text {
+      font-size: 0.74rem;
+      font-weight: 700;
+      color: var(--brand-tosca);
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 6px;
+    }
+
+    .promo-status-msg::after {
+      content: "Pilih item untuk klaim bonus!";
+    }
+
+    .promo-bar-bg {
+      height: 6px;
+      background: rgba(0,0,0,0.08);
+      border-radius: 50px;
+      overflow: hidden;
+    }
+
+    .promo-bar-fill {
+      height: 100%;
+      width: 35%;
+      background: linear-gradient(90deg, #0d9488, #f59e0b);
+      transition: width 0.4s ease;
+    }
+
+    /* Otomatis Penuh jika Pelanggan Memilih Add-on Checkbox */
+    .store-container:has(input[name="addon"]:checked) .promo-bar-fill {
+      width: 100%;
+    }
+    .store-container:has(input[name="addon"]:checked) .promo-status-msg::after {
+      content: "🎉 Bonus Stiker & Diskon Ongkir Aktif!";
+    }
+
+    /* Daftar Item di Struk (Muncul Otomatis sesuai Radio/Checkbox yang dipilih!) */
+    .receipt-section-title {
+      font-size: 0.7rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--text-light);
+      margin: 12px 0 8px 0;
+    }
+
+    .receipt-item {
+      display: none; /* Default tersembunyi, muncul otomatis via :has() */
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.82rem;
+      padding: 6px 0;
+      color: var(--text-dark);
+      font-weight: 600;
+      border-bottom: 1px dotted var(--divider);
+    }
+
+    .receipt-item span:last-child {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      color: var(--brand-caramel);
+    }
+
+    /* PURE CSS :has() BINDING — Menampilkan item di struk secara real-time! */
+    .store-container:has(#prod_1:checked) .rec-prod-1,
+    .store-container:has(#prod_2:checked) .rec-prod-2,
+    .store-container:has(#prod_3:checked) .rec-prod-3,
+    .store-container:has(#prod_4:checked) .rec-prod-4,
+    .store-container:has(#add_1:checked) .rec-add-1,
+    .store-container:has(#add_2:checked) .rec-add-2,
+    .store-container:has(#add_3:checked) .rec-add-3,
+    .store-container:has(#add_4:checked) .rec-add-4,
+    .store-container:has(#ship_1:checked) .rec-ship-1,
+    .store-container:has(#ship_2:checked) .rec-ship-2,
+    .store-container:has(#ship_3:checked) .rec-ship-3,
+    .store-container:has(#pay_1:checked) .rec-pay-1,
+    .store-container:has(#pay_2:checked) .rec-pay-2,
+    .store-container:has(#pay_3:checked) .rec-pay-3 {
+      display: flex;
+      animation: fadeInRow 0.25s ease;
+    }
+
+    @keyframes fadeInRow {
+      from { opacity: 0; transform: translateY(-4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Voucher Input inside Receipt */
+    .voucher-group {
+      display: flex;
+      gap: 8px;
+      margin: 16px 0;
+    }
+
+    .btn-voucher {
+      padding: 0 14px;
+      border-radius: 11px;
+      border: 1.5px solid var(--brand-tosca);
+      background: rgba(13, 148, 136, 0.1);
+      color: var(--brand-tosca);
+      font-size: 0.78rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .btn-voucher:hover {
+      background: var(--brand-tosca);
+      color: #fff;
+    }
+
+    /* Variasi Button Utama (Checkout, WhatsApp, Reset) */
+    .btn-checkout-main {
+      width: 100%;
+      padding: 14px 20px;
+      border-radius: 14px;
+      border: none;
+      background: linear-gradient(135deg, #059669 0%, #0d9488 45%, #ea580c 100%);
+      background-size: 220% 220%;
+      animation: gradientMove 6s ease infinite;
+      color: #ffffff;
+      font-size: 0.95rem;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 12px 24px -6px rgba(13, 148, 136, 0.45);
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .btn-checkout-main:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 30px -6px rgba(234, 88, 12, 0.5);
+      filter: brightness(1.05);
+    }
+
+    .secondary-btn-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .btn-outline-umkm {
+      padding: 10px;
+      border-radius: 11px;
+      border: 1.5px solid var(--input-border);
+      background: var(--input-bg);
+      color: var(--text-medium);
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .btn-outline-umkm:hover {
+      border-color: var(--brand-caramel);
+      color: var(--text-dark);
+    }
+
+    .guarantee-box {
+      margin-top: 16px;
+      padding-top: 14px;
+      border-top: 1px solid var(--divider);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      font-size: 0.72rem;
+      color: var(--text-light);
+      font-weight: 600;
+    }
+
+    /* ==========================================================================
+       11. RESPONSIVE BREAKPOINTS (MOBILE FRIENDLY SHOPPING)
+       ========================================================================== */
+    @media (max-width: 991.98px) {
+      .checkout-layout {
+        grid-template-columns: 1fr;
+      }
+      .form-column {
+        border-right: none;
+        border-bottom: 1px solid var(--divider);
+      }
+    }
+
+    @media (max-width: 767.98px) {
+      .store-header, .form-column, .summary-column {
+        padding: 22px 18px;
+      }
+      .product-catalog-grid, .addon-grid, .shipping-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- CHECKBOX HACK UNTUK LIGHT / DARK MODE (MURNI CSS) -->
+  <input type="checkbox" id="dark-mode-toggle">
+
+  <div class="umkm-portal">
+    <!-- Efek Gradasi Cahaya Halus di Latar Belakang -->
+    <div class="ambient-glow glow-caramel"></div>
+    <div class="ambient-glow glow-tosca"></div>
+
+    <div class="store-container">
+      <!-- 1. TOP PROMO BANNER (Psikologi Urgensi & Diskon UMKM) -->
+      <div class="promo-ticker">
+        <div>
+          <span class="promo-badge">PROMO UMKM LOKAL</span>
+          Diskon Ongkir & Gratis Kartu Ucapan Eksklusif untuk Pemesanan Hari Ini!
+        </div>
+        <div>
+          <i class="fa fa-clock-o mr-1"></i> Fresh Diproses Setiap Pagi
+        </div>
+      </div>
+
+      <!-- 2. HEADER TOKO UMKM & SOCIAL PROOF -->
+      <header class="store-header">
+        <div class="brand-profile">
+          <div class="brand-logo">
+            <i class="fa fa-coffee"></i>
+          </div>
+          <div class="brand-info">
+            <h1>
+              Senja Rasa Artisan
+              <span class="verified-pill"><i class="fa fa-check-circle"></i> UMKM Terverifikasi</span>
+            </h1>
+            <div class="trust-metrics">
+              <span class="star"><i class="fa fa-star"></i> 4.9/5.0 (2.840+ Ulasan Pelanggan)</span>
+              <span>•</span>
+              <span><i class="fa fa-shield text-success"></i> 100% Halal & Tanpa Pengawet</span>
+              <span>•</span>
+              <span><i class="fa fa-bolt text-warning"></i> Respon Cepat WhatsApp</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tombol Mode Terang / Gelap -->
+        <label for="dark-mode-toggle" class="mode-switch-btn" title="Ubah Suasana Toko">
+          <i class="fa fa-sun-o sun"></i>
+          <i class="fa fa-moon-o moon"></i>
+          <span class="label-text"></span>
+        </label>
+      </header>
+
+      <!-- 3. FORM UTAMA & LIVE STRUK KASIR -->
+      <form>
+        <div class="checkout-layout">
+
+          <!-- =================================================
+               KOLOM KIRI: PILIH PRODUK, CUSTOMIZE & DATA DIRI
+               ================================================= -->
+          <div class="form-column">
+
+            <!-- TAHAP 1: PILIH PRODUK (VARIASI RADIO BUTTON 1 - KARTU KATALOG) -->
+            <div class="step-header">
+              <span class="step-num">1</span>
+              <h3 class="step-title">Pilih Menu / Produk Unggulan</h3>
+              <span class="step-subtitle">Klik kartu untuk memilih</span>
+            </div>
+
+            <div class="product-catalog-grid">
+              <!-- Produk 1 -->
+              <div>
+                <input type="radio" name="produk" id="prod_1" value="kopi_aren_1L" class="hidden-input" checked>
+                <label for="prod_1" class="product-card-label">
+                  <div>
+                    <div class="prod-top">
+                      <div class="prod-icon"><i class="fa fa-coffee"></i></div>
+                      <span class="badge-hot">🔥 TERLARIS #1</span>
+                    </div>
+                    <span class="prod-name">Kopi Susu Gula Aren Semeru (1 Liter)</span>
+                    <span class="prod-desc">100% House Blend Arabika dengan gula aren organik asli & creamy milk.</span>
+                  </div>
+                  <div class="prod-price-row">
+                    <span class="prod-price">Rp 65.000</span>
+                    <span class="select-circle"><i class="fa fa-check"></i></span>
+                  </div>
+                </label>
+              </div>
+
+              <!-- Produk 2 -->
+              <div>
+                <input type="radio" name="produk" id="prod_2" value="croissant_box" class="hidden-input">
+                <label for="prod_2" class="product-card-label">
+                  <div>
+                    <div class="prod-top">
+                      <div class="prod-icon"><i class="fa fa-cutlery"></i></div>
+                      <span class="badge-fav">⭐ FAVORIT</span>
+                    </div>
+                    <span class="prod-name">Artisanal Butter Croissant & Pastry Box</span>
+                    <span class="prod-desc">Isi 6 pcs pastry renyah berlapis French Butter, Cokelat Belgia & Almond.</span>
+                  </div>
+                  <div class="prod-price-row">
+                    <span class="prod-price">Rp 85.000</span>
+                    <span class="select-circle"><i class="fa fa-check"></i></span>
+                  </div>
+                </label>
+              </div>
+
+              <!-- Produk 3 -->
+              <div>
+                <input type="radio" name="produk" id="prod_3" value="hampers_nusantara" class="hidden-input">
+                <label for="prod_3" class="product-card-label">
+                  <div>
+                    <div class="prod-top">
+                      <div class="prod-icon"><i class="fa fa-gift"></i></div>
+                      <span class="badge-hot">🎁 SPESIAL GIFT</span>
+                    </div>
+                    <span class="prod-name">Paket Hampers Eksklusif Senja Rasa</span>
+                    <span class="prod-desc">Kopi 500ml + Cookies Kastengel Keju Edam + Hardbox & Kartu Ucapan.</span>
+                  </div>
+                  <div class="prod-price-row">
+                    <span class="prod-price">Rp 145.000</span>
+                    <span class="select-circle"><i class="fa fa-check"></i></span>
+                  </div>
+                </label>
+              </div>
+
+              <!-- Produk 4 -->
+              <div>
+                <input type="radio" name="produk" id="prod_4" value="matcha_oat" class="hidden-input">
+                <label for="prod_4" class="product-card-label">
+                  <div>
+                    <div class="prod-top">
+                      <div class="prod-icon"><i class="fa fa-leaf"></i></div>
+                      <span class="badge-fav">🌿 HEALTHY</span>
+                    </div>
+                    <span class="prod-name">Pure Uji Matcha Oatmilk Series (1 Liter)</span>
+                    <span class="prod-desc">Matcha Jepang grade seremonial dipadukan dengan susu gandum rendah kalori.</span>
+                  </div>
+                  <div class="prod-price-row">
+                    <span class="prod-price">Rp 72.000</span>
+                    <span class="select-circle"><i class="fa fa-check"></i></span>
+                  </div>
+                </label>
+              </div>
+            </div>
+
+            <!-- TAHAP 2: VARIASI SELECT DROPDOWN & CHECKBOX ADD-ONS -->
+            <div class="step-header">
+              <span class="step-num">2</span>
+              <h3 class="step-title">Kustomisasi Pesanan & Tambahan Ekstra</h3>
+              <span class="step-subtitle">Sesuaikan selera Anda</span>
+            </div>
+
+            <div class="form-row">
+              <!-- Variasi Select 1: Takaran Gula / Varian Rasa -->
+              <div class="form-group col-md-4">
+                <label for="select_gula" class="form-label-umkm">Level Manis / Varian</label>
+                <select id="select_gula" name="select_gula" class="select-umkm">
+                  <option value="normal">Normal Sweet (Rekomendasi)</option>
+                  <option value="less">Less Sugar (70% Gula)</option>
+                  <option value="half">Half Sugar (50% Gula)</option>
+                  <option value="nosugar">No Sugar (Diet Friendly)</option>
+                </select>
+              </div>
+
+              <!-- Variasi Select 2: Cabang Outlet UMKM -->
+              <div class="form-group col-md-4">
+                <label for="select_cabang" class="form-label-umkm">Pilih Dapur / Cabang</label>
+                <select id="select_cabang" name="select_cabang" class="select-umkm">
+                  <option value="pusat">Dapur Pusat (Surabaya Kota)</option>
+                  <option value="cabang_jombang">Outlet Cabang Jombang</option>
+                  <option value="cabang_bandung">Outlet Cabang Bandung</option>
+                  <option value="cabang_padang">Outlet Cabang Padang</option>
+                </select>
+              </div>
+
+              <!-- Variasi Input Text: Jumlah Pesanan -->
+              <div class="form-group col-md-4">
+                <label for="jumlah_paket" class="form-label-umkm">Jumlah Paket / Box</label>
+                <div class="input-box-modern">
+                  <div class="input-icon-left"><i class="fa fa-shopping-bag"></i></div>
+                  <input type="text" id="jumlah_paket" name="jumlah_paket" class="input-field-umkm" value="1 Paket" placeholder="Contoh: 2 Paket" required>
+                  <i class="fa fa-check-circle auto-check"></i>
+                </div>
+              </div>
+            </div>
+
+            <!-- Variasi Checkbox: Tambahan Topping & Kemasan Aman -->
+            <label class="form-label-umkm mt-2 mb-2">
+              <span>Pilih Tambahan / Extra Topping (Bisa pilih lebih dari satu)</span>
+              <span class="req-tag">Opsional</span>
+            </label>
+            <div class="addon-grid">
+              <div>
+                <input type="checkbox" name="addon" id="add_1" value="extra_shot" class="hidden-input" checked>
+                <label for="add_1" class="addon-label">
+                  <div class="addon-left">
+                    <span class="check-box-ui"><i class="fa fa-check"></i></span>
+                    <span class="addon-title">Extra Espresso / Cream Cheese</span>
+                  </div>
+                  <span class="addon-price">+Rp 12rb</span>
+                </label>
+              </div>
+
+              <div>
+                <input type="checkbox" name="addon" id="add_2" value="hampers_box" class="hidden-input">
+                <label for="add_2" class="addon-label">
+                  <div class="addon-left">
+                    <span class="check-box-ui"><i class="fa fa-check"></i></span>
+                    <span class="addon-title">Tas Kanvas & Pita Hampers</span>
+                  </div>
+                  <span class="addon-price">+Rp 15rb</span>
+                </label>
+              </div>
+
+              <div>
+                <input type="checkbox" name="addon" id="add_3" value="thermal_bag" class="hidden-input">
+                <label for="add_3" class="addon-label">
+                  <div class="addon-left">
+                    <span class="check-box-ui"><i class="fa fa-check"></i></span>
+                    <span class="addon-title">Thermal Foil Bag + Ice Gel</span>
+                  </div>
+                  <span class="addon-price">+Rp 8rb</span>
+                </label>
+              </div>
+
+              <div>
+                <input type="checkbox" name="addon" id="add_4" value="kartu_ucapan" class="hidden-input">
+                <label for="add_4" class="addon-label">
+                  <div class="addon-left">
+                    <span class="check-box-ui"><i class="fa fa-check"></i></span>
+                    <span class="addon-title">Kartu Ucapan Cetak Custom</span>
+                  </div>
+                  <span class="addon-price">GRATIS</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- TAHAP 3: DATA PEMESAN & ALAMAT PENGIRIMAN (VARIASI TEXT & TEXTAREA) -->
+            <div class="step-header">
+              <span class="step-num">3</span>
+              <h3 class="step-title">Data Penerima & Pengiriman</h3>
+              <span class="step-subtitle">Untuk konfirmasi kurir</span>
+            </div>
+
+            <div class="form-row">
+              <!-- Input Text 1: Nama Pemesan -->
+              <div class="form-group col-md-6">
+                <label for="nama_pemesan" class="form-label-umkm">
+                  Nama Lengkap Penerima <span class="req-tag">*Wajib</span>
+                </label>
+                <div class="input-box-modern">
+                  <div class="input-icon-left"><i class="fa fa-user"></i></div>
+                  <input type="text" id="nama_pemesan" name="nama_pemesan" class="input-field-umkm" placeholder="Contoh: Budi Santoso" required>
+                  <i class="fa fa-check-circle auto-check"></i>
+                </div>
+              </div>
+
+              <!-- Input Text 2: Nomor WhatsApp -->
+              <div class="form-group col-md-6">
+                <label for="no_wa" class="form-label-umkm">
+                  Nomor WhatsApp Aktif <span class="req-tag">*Wajib</span>
+                </label>
+                <div class="input-box-modern">
+                  <div class="input-icon-left"><i class="fa fa-whatsapp"></i></div>
+                  <input type="text" id="no_wa" name="no_wa" class="input-field-umkm" placeholder="Contoh: 081234567890" required>
+                  <i class="fa fa-check-circle auto-check"></i>
+                </div>
+              </div>
+            </div>
+
+            <!-- Variasi Radio 2: Metode Pengiriman -->
+            <label class="form-label-umkm mt-1 mb-2">Pilih Metode Pengiriman</label>
+            <div class="shipping-grid mb-3">
+              <div>
+                <input type="radio" name="pengiriman" id="ship_1" value="instan" class="hidden-input" checked>
+                <label for="ship_1" class="ship-pill-label">
+                  <i class="fa fa-motorcycle"></i>
+                  <span class="ship-title">Kurir Instan</span>
+                  <span class="ship-sub">GoSend / Grab (Rp 10rb)</span>
+                </label>
+              </div>
+
+              <div>
+                <input type="radio" name="pengiriman" id="ship_2" value="pickup" class="hidden-input">
+                <label for="ship_2" class="ship-pill-label">
+                  <i class="fa fa-Map-marker"></i>
+                  <span class="ship-title">Ambil di Outlet</span>
+                  <span class="ship-sub">Bebas Ongkir (Rp 0)</span>
+                </label>
+              </div>
+
+              <div>
+                <input type="radio" name="pengiriman" id="ship_3" value="nextday" class="hidden-input">
+                <label for="ship_3" class="ship-pill-label">
+                  <i class="fa fa-truck"></i>
+                  <span class="ship-title">Reguler Aman</span>
+                  <span class="ship-sub">luar Kota (Rp 12rb)</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <!-- Variasi Textarea 1: Alamat Lengkap -->
+              <div class="form-group col-md-7">
+                <label for="alamat_kirim" class="form-label-umkm">
+                  Alamat Lengkap & Patokan Rumah <span class="req-tag">*Wajib</span>
+                </label>
+                <textarea id="alamat_kirim" name="alamat_kirim" rows="3" class="textarea-umkm" placeholder="Nama jalan, nomor rumah, RT/RW, kec., dan patokan warna pagar..." required></textarea>
+              </div>
+
+              <!-- Variasi Textarea 2: Catatan Pesanan / Isi Kartu Ucapan -->
+              <div class="form-group col-md-5">
+                <label for="catatan_khusus" class="form-label-umkm">
+                  Catatan / Tulisan Kartu Ucapan <span class="req-tag">Opsional</span>
+                </label>
+                <textarea id="catatan_khusus" name="catatan_khusus" rows="3" class="textarea-umkm" placeholder="Contoh: Es batu dipisah ya kak / Selamat ulang tahun sahabatku..."></textarea>
+              </div>
+            </div>
+
+            <!-- Variasi Radio 3: Metode Pembayaran -->
+            <label class="form-label-umkm mt-1 mb-2">Pilih Metode Pembayaran</label>
+            <div class="shipping-grid">
+              <div>
+                <input type="radio" name="pembayaran" id="pay_1" value="qris" class="hidden-input" checked>
+                <label for="pay_1" class="ship-pill-label">
+                  <i class="fa fa-qrcode"></i>
+                  <span class="ship-title">QRIS Instan</span>
+                  <span class="ship-sub">Gopay, OVO, Dana, M-Banking</span>
+                </label>
+              </div>
+
+              <div>
+                <input type="radio" name="pembayaran" id="pay_2" value="transfer" class="hidden-input">
+                <label for="pay_2" class="ship-pill-label">
+                  <i class="fa fa-bank"></i>
+                  <span class="ship-title">Transfer Bank</span>
+                  <span class="ship-sub">BCA, Mandiri, BRI, BNI</span>
+                </label>
+              </div>
+
+              <div>
+                <input type="radio" name="pembayaran" id="pay_3" value="cod" class="hidden-input">
+                <label for="pay_3" class="ship-pill-label">
+                  <i class="fa fa-money"></i>
+                  <span class="ship-title">COD (Bayar Ditempat)</span>
+                  <span class="ship-sub">Bayar Tunai ke Kurir</span>
+                </label>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- =================================================
+               KOLOM KANAN: LIVE STRUK KASIR OTOMATIS (PURE CSS)
+               ================================================= -->
+          <aside class="summary-column">
+            <div class="receipt-card">
+              <div class="receipt-head">
+                <h4><i class="fa fa-file-text-o mr-1"></i> RINGKASAN PESANAN</h4>
+                <span>STRUK OTOMATIS • SENJA RASA</span>
+              </div>
+
+              <!-- Progress Bar Bonus Otomatis -->
+              <div class="Spin-promo-box">
+                <div class="promo-progress-text">
+                  <span class="promo-status-msg"></span>
+                </div>
+                <div class="promo-bar-bg">
+                  <div class="promo-bar-fill"></div>
+                </div>
+              </div>
+
+              <!-- Item Produk yang Dipilih (Muncul Otomatis via CSS :has) -->
+              <div class="receipt-section-title">Produk Utama Pilihan:</div>
+              <div class="receipt-item rec-prod-1">
+                <span>1x Kopi Susu Aren (1L)</span>
+                <span>Rp 65.000</span>
+              </div>
+              <div class="receipt-item rec-prod-2">
+                <span>1x Butter Croissant Box</span>
+                <span>Rp 85.000</span>
+              </div>
+              <div class="receipt-item rec-prod-3">
+                <span>1x Hampers Nusantara</span>
+                <span>Rp 145.000</span>
+              </div>
+              <div class="receipt-item rec-prod-4">
+                <span>1x Matcha Oat Series (1L)</span>
+                <span>Rp 72.000</span>
+              </div>
+
+              <!-- Item Topping / Addon (Muncul Otomatis saat dicentang) -->
+              <div class="receipt-section-title">Tambahan / Add-Ons:</div>
+              <div class="receipt-item rec-add-1">
+                <span>+ Extra Espresso/Cheese</span>
+                <span>Rp 12.000</span>
+              </div>
+              <div class="receipt-item rec-add-2">
+                <span>+ Tas & Pita Hampers</span>
+                <span>Rp 15.000</span>
+              </div>
+              <div class="receipt-item rec-add-3">
+                <span>+ Thermal Bag & Ice Gel</span>
+                <span>Rp 8.000</span>
+              </div>
+              <div class="receipt-item rec-add-4">
+                <span>+ Kartu Ucapan Custom</span>
+                <span>GRATIS</span>
+              </div>
+
+              <!-- Pengiriman & Pembayaran -->
+              <div class="receipt-section-title">Layanan & Pembayaran:</div>
+              <div class="receipt-item rec-ship-1">
+                <span>Kurir Instan (GoSend/Grab)</span>
+                <span>Rp 10.000</span>
+              </div>
+              <div class="receipt-item rec-ship-2">
+                <span>Ambil Sendiri di Outlet</span>
+                <span>RP 0 (HEMAT)</span>
+              </div>
+              <div class="receipt-item rec-ship-3">
+                <span>Ekspedisi Reguler Aman</span>
+                <span>Rp 12.000</span>
+              </div>
+
+              <div class="receipt-item rec-pay-1">
+                <span>Metode Bayar:</span>
+                <span>QRIS INSTAN</span>
+              </div>
+              <div class="receipt-item rec-pay-2">
+                <span>Metode Bayar:</span>
+                <span>TRANSFER BANK</span>
+              </div>
+              <div class="receipt-item rec-pay-3">
+                <span>Metode Bayar:</span>
+                <span>COD TUNAI</span>
+              </div>
+
+              <!-- Input Text 3 + Button 1: Kode Voucher Promo -->
+              <div class="voucher-group">
+                <div class="input-box-modern" style="flex: 1;">
+                  <input type="text" name="kode_voucher" class="input-field-umkm" placeholder="Kode Promo (Cth: LARIS26)" style="padding: 8px 12px; font-size: 0.8rem;">
+                </div>
+                <button type="button" class="btn-voucher">Pakai</button>
+              </div>
+
+              <!-- Checkbox Persetujuan Pesanan -->
+              <div class="custom-control custom-checkbox mb-3">
+                <input type="checkbox" class="custom-control-input" id="setuju_pesanan" name="setuju_pesanan" required checked>
+                <label class="custom-control-label" for="setuju_pesanan" style="font-size: 0.76rem; color: var(--text-medium); cursor: pointer;">
+                  Pesanan saya sudah sesuai & siap diproses oleh tim Senja Rasa.
+                </label>
+              </div>
+
+              <!-- Variasi Button 2 & 3: Tombol Checkout Utama, Simpan Draft & Reset -->
+              <button type="submit" name="submit_order" class="btn-checkout-main">
+                <i class="fa fa-whatsapp" style="font-size: 1.15rem;"></i> Buat Pesanan Sekarang
+              </button>
+
+              <div class="secondary-btn-row">
+                <button type="reset" class="btn-outline-umkm">
+                  <i class="fa fa-refresh"></i> Atur Ulang
+                </button>
+                <button type="button" class="btn-outline-umkm">
+                  <i class="fa fa-bookmark-o"></i> Simpan Menu
+                </button>
+              </div>
+
+              <div class="guarantee-box">
+                <span><i class="fa fa-lock text-success"></i> Transaksi Aman</span>
+                <span>•</span>
+                <span><i class="fa fa-thumbs-up text-warning"></i> Jaminan Fresh</span>
+              </div>
+            </div>
+          </aside>
+
+        </div>
+      </form>
+    </div>
+  </div>
+
+</body>
+</html>
+</body>
+</html>
